@@ -247,7 +247,7 @@
 </style>
 <body style = "background-color: rgb(225,223,212)">
 <!-- 表单 -->
-<form>
+<form method="post" action="/register">
     <!-- 使用div来控制表单位置-->
     <div class = "user">
 
@@ -285,8 +285,8 @@
                 <!-- 性别 单选框-->
                 <tr>
                     <td><span id = "gender_span1">*</span>Gender:</td>
-                    <td style = "font-size: 18px;"> <input id = "Male" onclick = "checkGender(this)" type = "radio"  value = "Male" style = "width: 15px; height: 15px;"> Male
-                        <input id = "Female" onclick = "checkGender(this)" type = "radio"  value = "Female" style = "width: 15px; height: 15px;"> Female  </td>
+                    <td style = "font-size: 18px;"> <input id = "Male" onclick = "checkGender(this)" type = "radio"  name="gender" value = "Male" style = "width: 15px; height: 15px;"> Male
+                        <input id = "Female" onclick = "checkGender(this)" type = "radio"  name="gender" value = "Female" style = "width: 15px; height: 15px;"> Female  </td>
                 </tr>
 
                 <!-- 生日 文本框-->
