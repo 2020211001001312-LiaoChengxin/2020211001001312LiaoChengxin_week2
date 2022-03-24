@@ -39,7 +39,7 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        int i = 0;
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String email = request.getParameter("email");
@@ -47,21 +47,80 @@ public class RegisterServlet extends HttpServlet {
         String birthdate = request.getParameter("birthdate");
         PreparedStatement ps = null;
 
-        String sql = "insert into usertable(id,username,password,email,gender,birthdate)  values(?,?,?,?,?,?)";
+        PreparedStatement preparedStatement1 = null;
+        ResultSet resultSet1 = null;
+
+        try {
+            String sql = "select * from usertable";
+            preparedStatement1 = con.prepareStatement(sql);
+            resultSet1 = preparedStatement1.executeQuery();
+            while (resultSet1.next()) {
+                i = i + 1;
+            }
+
+        } catch (SQLException throwables1) {
+            throwables1.printStackTrace();
+        } finally {
+
+            try {
+                if (preparedStatement1 != null)
+                    preparedStatement1.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (resultSet1 != null)
+                    resultSet1.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        boolean flag = true;
+        try {
+            String sql = "select * from usertable where username=? ";
+            preparedStatement1 = con.prepareStatement(sql);
+            preparedStatement1.setString(1, username);
+            resultSet1 = preparedStatement1.executeQuery();
+            while (resultSet1.next()) {
+                flag = false;
+            }
+
+        } catch (SQLException throwables1) {
+            throwables1.printStackTrace();
+        } finally {
+
+            try {
+                if (preparedStatement1 != null)
+                    preparedStatement1.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (resultSet1 != null)
+                    resultSet1.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (flag)
+        {
+            String sql = "insert into usertable(id,username,password,email,gender,birthdate)  values(?,?,?,?,?,?)";
         try {
             ps = con.prepareStatement(sql);
-            ps.setString(1,"2");
-            ps.setString(2,username);
-            ps.setString(3,password);
-            ps.setString(4,email);
-            ps.setString(5,gender);
-            ps.setString(6,birthdate);
+            String s = Integer.toString(i + 1);
+            ps.setString(1, s);
+            ps.setString(2, username);
+            ps.setString(3, password);
+            ps.setString(4, email);
+            ps.setString(5, gender);
+            ps.setString(6, birthdate);
             ps.execute();
             System.out.println("insert --> OK !");
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             try {
                 ps.close();
             } catch (SQLException e) {
@@ -76,42 +135,43 @@ public class RegisterServlet extends HttpServlet {
             sql = "select * from usertable";
             preparedStatement = con.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String username2 = resultSet.getString("username");
                 String password2 = resultSet.getString("password");
                 String email2 = resultSet.getString("email");
                 String gender2 = resultSet.getString("gender");
                 String birthdate2 = resultSet.getString("birthdate");
-                users user = new users(id,username,password,email,gender,birthdate);
+                users user = new users(id, username2, password2, email2, gender2, birthdate2);
                 list.add(user);
             }
-            for (users user : list){
+            for (users user : list) {
                 System.out.println(user);
             }
-        } catch (SQLException throwables)
-        {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         } finally {
 
             try {
-                if(preparedStatement!=null)
+                if (preparedStatement != null)
                     preparedStatement.close();
-            }catch (SQLException e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
             try {
-                if(resultSet!=null)
+                if (resultSet != null)
                     resultSet.close();
-            }catch (SQLException e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
 
-        request.setAttribute("list",list);
-        request.getRequestDispatcher("week4/users_list.jsp").forward(request,response);
-
-
+        request.setAttribute("list", list);
+        request.getRequestDispatcher("week4/users_list.jsp").forward(request, response);
+    }
+    else {
+        System.out.println("insert --> Not ok!");
+        }
     }
 
     @Override
@@ -120,6 +180,7 @@ public class RegisterServlet extends HttpServlet {
 
         try {
             con.close();
+            System.out.println("Con Closed!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
