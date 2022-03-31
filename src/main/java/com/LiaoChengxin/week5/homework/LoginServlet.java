@@ -32,7 +32,8 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        super.init();
+//        super.init();
+        doPost(request,response);
     }
 
     @Override
@@ -52,8 +53,19 @@ public class LoginServlet extends HttpServlet {
             rs2 = ps2.executeQuery();
             if (rs2.next()){
                 String password = rs2.getString("password");
-                if (loginPassword.equals(password))
-                    writer.println("Login Success!!!\nWelcome,"+loginName);
+                if (loginPassword.equals(password)){
+//                    writer.println("Login Success!!!\nWelcome,"+loginName);
+
+                    request.setAttribute("id",rs2.getString("id"));
+                    request.setAttribute("username",rs2.getString("username"));
+                    request.setAttribute("password",rs2.getString("password"));
+                    request.setAttribute("email",rs2.getString("email"));
+                    request.setAttribute("gender",rs2.getString("gender"));
+                    request.setAttribute("birthdate",rs2.getString("birthdate"));
+                    request.getRequestDispatcher("userInfo.jsp").forward(request,response);
+
+                }
+
                 else
                     flag = false;
             }
@@ -61,7 +73,12 @@ public class LoginServlet extends HttpServlet {
                 flag = false;
 
             if (!flag)
-                writer.println("Username or Password Error!!!");
+            {
+//                writer.println("Username or Password Error!!!");
+                request.setAttribute("message","Username or Password Error!!!");
+                request.getRequestDispatcher("login.jsp").forward(request,response);
+            }
+
 
         } catch (SQLException throwables1) {
             throwables1.printStackTrace();
@@ -81,15 +98,23 @@ public class LoginServlet extends HttpServlet {
                 e.printStackTrace();
             }
 
-            try {
-                if (con2 != null)
-                    con2.close();
-                System.out.println("Con2 Closed!!");
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+
 
 
         }
     }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+
+        try {
+            if (con2 != null)
+                con2.close();
+            System.out.println("Con2 Closed!!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
+

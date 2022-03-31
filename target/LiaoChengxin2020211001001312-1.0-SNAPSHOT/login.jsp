@@ -7,6 +7,13 @@
 --%>
 <%@include file="header.jsp"%>
 <h1 style="text-align: center">Login</h1>
+
+<%
+    if (!(request.getAttribute("message")==null)){
+        out.print("<h3>"+request.getAttribute("message")+"</h3>");
+    }
+%>
+
 <form method="post" action="login">
     <table cellspacing = "10px">
         <tr>
