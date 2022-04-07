@@ -1,5 +1,6 @@
 package com.LiaoChengxin.week3.homework;
 
+import com.LiaoChengxin.model.User;
 import jdk.nashorn.internal.ir.WhileNode;
 
 import javax.servlet.*;
@@ -47,8 +48,8 @@ public class RegisterServlet extends HttpServlet {
         String email = request.getParameter("email");
         String gender = request.getParameter("gender");
         String birthdate = request.getParameter("birthdate");
-        PreparedStatement ps = null;
 
+        PreparedStatement ps = null;
         PreparedStatement preparedStatement1 = null;
         ResultSet resultSet1 = null;
 
@@ -144,7 +145,7 @@ public class RegisterServlet extends HttpServlet {
 //                String email2 = resultSet.getString("email");
 //                String gender2 = resultSet.getString("gender");
 //                String birthdate2 = resultSet.getString("birthdate");
-//                users user = new users(id, username2, password2, email2, gender2, birthdate2);
+//                User user = new User(id, username2, password2, email2, gender2, birthdate2);
 //                list.add(user);
 //            }
 //            for (users user : list) {

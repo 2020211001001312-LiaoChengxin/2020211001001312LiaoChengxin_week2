@@ -1,5 +1,8 @@
 package com.LiaoChengxin.week5.homework;
 
+import com.LiaoChengxin.dao.UserDao;
+import com.LiaoChengxin.model.User;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -33,7 +36,8 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        super.init();
-        doPost(request,response);
+//        doPost(request,response);
+        request.getRequestDispatcher("WEB-INF/views/login.jsp").forward(request,response);
     }
 
     @Override
@@ -41,67 +45,84 @@ public class LoginServlet extends HttpServlet {
         String loginName = request.getParameter("loginName");
         String loginPassword = request.getParameter("loginPassword");
 
-        PrintWriter writer= response.getWriter();
-
-        PreparedStatement ps2= null;
-        ResultSet rs2= null;
-        boolean flag = true;
+//        MVC code
+        UserDao userDao = new UserDao();
         try {
-            String sql = "select * from usertable where username=? ";
-            ps2 = con2.prepareStatement(sql);
-            ps2.setString(1,loginName);
-            rs2 = ps2.executeQuery();
-            if (rs2.next()){
-                String password = rs2.getString("password");
-                if (loginPassword.equals(password)){
-//                    writer.println("Login Success!!!\nWelcome,"+loginName);
-
-                    request.setAttribute("id",rs2.getString("id"));
-                    request.setAttribute("username",rs2.getString("username"));
-                    request.setAttribute("password",rs2.getString("password"));
-                    request.setAttribute("email",rs2.getString("email"));
-                    request.setAttribute("gender",rs2.getString("gender"));
-                    request.setAttribute("birthdate",rs2.getString("birthdate"));
-                    request.getRequestDispatcher("userInfo.jsp").forward(request,response);
-
-                }
-
-                else
-                    flag = false;
-            }
-            else
-                flag = false;
-
-            if (!flag)
-            {
-//                writer.println("Username or Password Error!!!");
-                request.setAttribute("message","Username or Password Error!!!");
-                request.getRequestDispatcher("login.jsp").forward(request,response);
-            }
-
-
-        } catch (SQLException throwables1) {
-            throwables1.printStackTrace();
-        } finally {
-
-            try {
-                if (ps2 != null)
-                    ps2.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                if (rs2 != null)
-                    rs2.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-
-
-
+           User user = userDao.findByUsernamePassword(con2,loginName,loginPassword);
+           if (user!=null)
+           {
+               request.setAttribute("user",user);// get user info in jsp.
+               request.getRequestDispatcher("WEB-INF/views/userInfo.jsp").forward(request,response);
+           }else {
+               request.setAttribute("message","Username or Password Error!!!");
+               request.getRequestDispatcher("WEB-INF/views/login.jsp").forward(request,response);
+           }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
+// ------------------------------------------------
+//        PrintWriter writer= response.getWriter();
+//
+//        PreparedStatement ps2= null;
+//        ResultSet rs2= null;
+//        boolean flag = true;
+//        try {
+//            String sql = "select * from usertable where username=? ";
+//            ps2 = con2.prepareStatement(sql);
+//            ps2.setString(1,loginName);
+//            rs2 = ps2.executeQuery();
+//            if (rs2.next()){
+//                String password = rs2.getString("password");
+//                if (loginPassword.equals(password)){
+////                    writer.println("Login Success!!!\nWelcome,"+loginName);
+//
+//                    request.setAttribute("id",rs2.getString("id"));
+//                    request.setAttribute("username",rs2.getString("username"));
+//                    request.setAttribute("password",rs2.getString("password"));
+//                    request.setAttribute("email",rs2.getString("email"));
+//                    request.setAttribute("gender",rs2.getString("gender"));
+//                    request.setAttribute("birthdate",rs2.getString("birthdate"));
+//                    request.getRequestDispatcher("userInfo.jsp").forward(request,response);
+//
+//                }
+//
+//                else
+//                    flag = false;
+//            }
+//            else
+//                flag = false;
+//
+//            if (!flag)
+//            {
+////                writer.println("Username or Password Error!!!");
+//                request.setAttribute("message","Username or Password Error!!!");
+//                request.getRequestDispatcher("login.jsp").forward(request,response);
+//            }
+//
+//
+//        } catch (SQLException throwables1) {
+//            throwables1.printStackTrace();
+//        } finally {
+//
+//            try {
+//                if (ps2 != null)
+//                    ps2.close();
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//
+//            try {
+//                if (rs2 != null)
+//                    rs2.close();
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//
+//
+//
+//
+//        }
     }
 
     @Override
