@@ -25,7 +25,7 @@ public class LoginServlet extends HttpServlet {
         try {
             Class.forName(driver);
             con2= DriverManager.getConnection(url,username,password);
-            System.out.println("Connection --> in RegisterServlet "+con2);
+            System.out.println("Connection --> in LoginServlet "+con2);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -51,7 +51,36 @@ public class LoginServlet extends HttpServlet {
            User user = userDao.findByUsernamePassword(con2,loginName,loginPassword);
            if (user!=null)
            {
-               request.setAttribute("user",user);// get user info in jsp.
+//               Week 8 demo2-- Use cookie for session
+//               Cookie c=new Cookie("sessionid",""+user.getId());
+//               c.setMaxAge(10*60);
+//               response.addCookie(c);
+
+//               add code for rememberMe
+               String rememberMe = request.getParameter("rememberMe");
+//               System.out.println(rememberMe.equals("1"));
+               if(rememberMe!=null && rememberMe.equals("1")){
+                   Cookie usernameCookie = new Cookie("cUsername",user.getUsername());
+                   Cookie passwordCookie = new Cookie("cPassword",user.getPassword());
+                   Cookie rememberMeCookie = new Cookie("cRememberMe",rememberMe);
+
+                   usernameCookie.setMaxAge(5);
+                   passwordCookie.setMaxAge(5);
+                   rememberMeCookie.setMaxAge(5);
+
+                   response.addCookie(usernameCookie);
+                   response.addCookie(passwordCookie);
+                   response.addCookie(rememberMeCookie);
+           }
+
+//              Week 8 demo2
+               HttpSession session = request.getSession();
+               //check session id
+               System.out.println("session id-->"+session.getId());
+               session.setMaxInactiveInterval(10);
+
+
+              session.setAttribute("user",user);// get user info in jsp.
                request.getRequestDispatcher("WEB-INF/views/userInfo.jsp").forward(request,response);
            }else {
                request.setAttribute("message","Username or Password Error!!!");

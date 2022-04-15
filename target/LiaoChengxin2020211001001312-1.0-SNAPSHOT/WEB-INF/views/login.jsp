@@ -13,18 +13,45 @@
         out.print("<h3>"+request.getAttribute("message")+"</h3>");
     }
 %>
+<%
+     //read cookies
+    Cookie[] allCookies = request.getCookies();
+    String username = "",password = "",rememberMeVale = "";
+    if (allCookies!=null){
+        for(Cookie c:allCookies){
+            if(c.getName().equals("cUsername")){
+                username = c.getValue();
+            }
+            if(c.getName().equals("cPassword")){
+                password = c.getValue();
+            }
+
+            if(c.getName().equals("cRememberMe")){
+                rememberMeVale = c.getValue();
+            }
+
+        }
+    }
+%>
 
 <form method="post" action="login">
     <table cellspacing = "10px">
         <tr>
             <td><span>Username:</span></td>
-            <td><input style = "width: 300px; height: 35px;" name="loginName" type = "text"></td>
+            <td><input style = "width: 300px; height: 35px;" name="loginName" type = "text" value="<%=username%>"></td>
         </tr>
 
         <tr>
             <td><span>Password:</span></td>
-            <td><input style = "width: 300px; height: 35px;" name="loginPassword" type = "password"></td>
+            <td><input style = "width: 300px; height: 35px;" name="loginPassword" type = "password" value="<%=password%>"></td>
         </tr>
+
+        <tr>
+            <td><input type="checkbox" value="1" name="rememberMe" <%=rememberMeVale.equals("1")?"checked":""%>checked/>rememberMe</td>
+
+
+        </tr>
+
 
         <tr>
             <td>
