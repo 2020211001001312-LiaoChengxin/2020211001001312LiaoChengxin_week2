@@ -2,6 +2,7 @@ package com.LiaoChengxin.week5.homework;
 
 import com.LiaoChengxin.dao.UserDao;
 import com.LiaoChengxin.model.User;
+import com.sun.deploy.net.HttpRequest;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -78,9 +79,7 @@ public class LoginServlet extends HttpServlet {
                //check session id
                System.out.println("session id-->"+session.getId());
                session.setMaxInactiveInterval(10);
-
-
-              session.setAttribute("user",user);// get user info in jsp.
+                session.setAttribute("user",user);// get user info in jsp.
                request.getRequestDispatcher("WEB-INF/views/userInfo.jsp").forward(request,response);
            }else {
                request.setAttribute("message","Username or Password Error!!!");

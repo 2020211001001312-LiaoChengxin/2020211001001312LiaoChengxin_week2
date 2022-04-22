@@ -96,5 +96,33 @@
     <welcome-file-list>
         <welcome-file>home</welcome-file>
     </welcome-file-list>
-    
+<!--chain of filters-->
+<!--1st-->
+    <filter>
+        <filter-name>HelloServlet</filter-name>
+        <filter-class>com.LiaoChengxin.filter.HelloFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>HelloFilter</filter-name>
+        <url-pattern>/hello</url-pattern>
+    </filter-mapping>
+<!--2nd-->
+    <filter>
+        <filter-name>LoggerFilter</filter-name>
+        <filter-class>com.LiaoChengxin.filter.LoggerFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LoggerFilter</filter-name>
+        <url-pattern>/hello</url-pattern>
+    </filter-mapping>
+<!--3nd-->
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>com.LiaoChengxin.filter.AuthFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/hello</url-pattern>
+    </filter-mapping>
+
 </web-app>
