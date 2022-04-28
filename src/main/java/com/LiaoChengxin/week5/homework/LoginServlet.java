@@ -45,7 +45,7 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String loginName = request.getParameter("loginName");
         String loginPassword = request.getParameter("loginPassword");
-
+        System.out.println(loginName+loginPassword);
 //        MVC code
         UserDao userDao = new UserDao();
         try {

@@ -1,65 +1,50 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: 廖承心
-  Date: 2022/3/23
-  Time: 18:26
-  To change this template use File | Settings | File Templates.
---%>
+
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="header.jsp"%>
-<h1 style="text-align: center">Login</h1>
-
+<section id="form"><!--form-->
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-4 col-sm-offset-1">
+					<div class="login-form"><!--login form-->
+					<h2>Login to your account</h2>	<%
+    if(!(request.getAttribute("message")==null)){
+    out.println("<h2>"+request.getAttribute("message")+"</h2>");
+}%>
 <%
-    if (!(request.getAttribute("message")==null)){
-        out.print("<h3>"+request.getAttribute("message")+"</h3>");
-    }
-%>
-<%
-     //read cookies
-    Cookie[] allCookies = request.getCookies();
-    String username = "",password = "",rememberMeVale = "";
-    if (allCookies!=null){
-        for(Cookie c:allCookies){
-            if(c.getName().equals("cUsername")){
-                username = c.getValue();
+    Cookie[] cookies=request.getCookies();
+    String username="";
+    String password="";
+    String rememberMe="";
+    if (cookies!=null){
+        for (Cookie cookie:cookies){
+            if (cookie.getName().equals("cUsername")){
+                username=cookie.getValue();
             }
-            if(c.getName().equals("cPassword")){
-                password = c.getValue();
+            if (cookie.getName().equals("cPassword")){
+                password=cookie.getValue();
             }
-
-            if(c.getName().equals("cRememberMe")){
-                rememberMeVale = c.getValue();
+            if (cookie.getName().equals("cRememberMe")){
+                rememberMe=cookie.getValue();
             }
-
         }
     }
+    //update 5 user basepath
 %>
 
-<form method="post" action="login">
-    <table cellspacing = "10px">
-        <tr>
-            <td><span>Username:</span></td>
-            <td><input style = "width: 300px; height: 35px;" name="loginName" type = "text" value="<%=username%>"></td>
-        </tr>
-
-        <tr>
-            <td><span>Password:</span></td>
-            <td><input style = "width: 300px; height: 35px;" name="loginPassword" type = "password" value="<%=password%>"></td>
-        </tr>
-
-        <tr>
-            <td><input type="checkbox" value="1" name="rememberMe" <%=rememberMeVale.equals("1")?"checked":""%>checked/>rememberMe</td>
-
-
-        </tr>
-
-
-        <tr>
-            <td>
-                <div style="width: 90px;height: 35px;"></div>
-            </td>
-            <td><input style = "width: 120px;height: 35px; font-size: 18px; font-weight: 700;
-                letter-spacing: 2px; background-color: rgba(23, 139, 233, 0.8); color: #fff;" type = "submit" value="Login"></td>
-        </tr>
-    </table>
-</form>
-<%@include file="footer.jsp"%>>
+<form method="post" action="<%=request.getContextPath()+"/login"%>">
+    <input type="text" name="loginName" placeholder="Username" value="<%=username%>"><br>
+   <input type="password" name="loginPassword" placeholder="password" value="<%=password%>">
+    <br/>
+    <span>
+		<input type="checkbox" class="checkbox" name="remember" value="1" <%="1".equals(rememberMe)? "checked":""%>/> Keep me signed in
+   </span>
+    <button type="submit" class="btn btn-default">Login</button>
+</form>	
+					</div><!--/login form-->
+				</div>
+				
+				
+			</div>
+		</div>
+	</section><!--/form-->
+<%@include file="footer.jsp"%>
