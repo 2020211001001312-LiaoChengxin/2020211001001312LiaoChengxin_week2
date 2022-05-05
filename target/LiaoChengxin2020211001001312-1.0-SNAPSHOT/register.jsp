@@ -10,7 +10,7 @@
 <script src="week2/registerJavaScript.js"></script>
 <link href="week2/registerStyle.css" rel="stylesheet" type="text/css">
 <h1 style="text-align: center">This is my register JSP page.</h1>
-<form method="post" action="/register">
+<form method="post" action="register">
     <!-- 使用div来控制表单位置-->
     <div class = "user">
 
