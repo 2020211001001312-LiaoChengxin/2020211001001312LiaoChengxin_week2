@@ -79,10 +79,22 @@
 <!--        <servlet-name>RegisterServlet</servlet-name>-->
 <!--        <url-pattern>/register</url-pattern>-->
 <!--    </servlet-mapping>-->
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>LifeCycleServlet</servlet-name>-->
+<!--        <url-pattern>/life</url-pattern>-->
+<!--    </servlet-mapping>-->
+
+
+    <servlet>
+        <servlet-name>LifeCycleServletforLab1</servlet-name>
+        <servlet-class>com.LiaoChengxin.Lab1.LifeCycleServletforLab1</servlet-class>
+    </servlet>
+
     <servlet-mapping>
-        <servlet-name>LifeCycleServlet</servlet-name>
+        <servlet-name>LifeCycleServletforLab1</servlet-name>
         <url-pattern>/life</url-pattern>
     </servlet-mapping>
+
 <!--    <servlet-mapping>-->
 <!--        <servlet-name>JDBCHomeworkServlet</servlet-name>-->
 <!--        <url-pattern>/jdbc</url-pattern>-->

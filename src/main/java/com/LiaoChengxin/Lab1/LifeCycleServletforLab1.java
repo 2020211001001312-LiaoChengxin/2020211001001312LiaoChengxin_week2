@@ -1,21 +1,19 @@
-package com.LiaoChengxin.week3.homework;
-
+package com.LiaoChengxin.Lab1;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-public class LifeCycleServlet extends HttpServlet {
+public class LifeCycleServletforLab1 extends HttpServlet {
 
     int counter;
-    public LifeCycleServlet(){
+    public LifeCycleServletforLab1(){
         System.out.println("I am form default constructor.");
     }
 
     @Override
     public void init(){
-
-//        System.out.println(" i am in init()");
+//        System.out.println(" I am in init()");
         counter = 0;
     }
 
@@ -34,7 +32,7 @@ public class LifeCycleServlet extends HttpServlet {
 
     @Override
     public void destroy(){
-        System.out.println(" i am in destroy()");
+        System.out.println(" I am in destroy()");
     }
 
 }
