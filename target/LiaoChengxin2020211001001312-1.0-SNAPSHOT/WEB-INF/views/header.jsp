@@ -128,7 +128,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<li><a href="<%=basePath%>home" class="active">Home</a></li>
 								<li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
-                                        <li><a href="<%=basePath%>shop">Products</a></li>
+                                        <li><a href="<%=basePath%>shop.jsp">Products</a></li>
 										<!--<li><a href="product-details.html">Product Details</a></li>  -->
 										<li><a href="<%=basePath%>myCart">Cart</a></li> 
 										<li><a href="<%=basePath%>order">Order</a></li>

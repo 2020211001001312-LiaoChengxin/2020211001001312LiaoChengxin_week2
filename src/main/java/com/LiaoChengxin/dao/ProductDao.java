@@ -6,10 +6,7 @@ import com.LiaoChengxin.model.User;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -65,7 +62,7 @@ public class ProductDao implements  IProductDao{
     @Override
     public Product findById(Integer productId, Connection con) throws SQLException {
 
-        String sql = "select * from Product where id=?";
+        String sql = "select * from Product where productId=?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1,productId.toString());
         ResultSet rs = ps.executeQuery();
@@ -180,4 +177,19 @@ public class ProductDao implements  IProductDao{
 
         return null;
     }
+
+    public byte[] getPictureById(Integer productId,Connection con) throws SQLException {
+        byte[] imageBytes = null;
+        String sql = "select picture from product where productId=?";
+        PreparedStatement pt = con.prepareStatement(sql);
+        pt.setInt(1,productId);
+        ResultSet rs = pt.executeQuery();
+        while(rs.next()){
+            Blob blob = rs.getBlob("picture");
+            imageBytes = blob.getBytes(1,(int)blob.length());
+        }
+        return imageBytes;
+    }
+
+
 }

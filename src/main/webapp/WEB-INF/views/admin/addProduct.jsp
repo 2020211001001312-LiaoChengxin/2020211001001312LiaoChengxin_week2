@@ -19,7 +19,7 @@
 	    			<div class="contact-form">
 	    				<h2 class="title text-center">Add Product</h2>
 	    				<div class="status alert alert-success" style="display: none"></div>
-				    	<form id="main-contact-form" class="contact-form row" name="contact-form" method="post" enctype="multipart/form-data" action="<%=basePath %>admin/addProduct">
+				    	<form id="main-contact-form" class="contact-form row" name="contact-form" method="post" enctype="multipart/form-data" action="<%=basePath%>admin/addProduct">
 				            <div class="form-group col-md-6">
 				                <input type="text" name="productName" class="form-control" required="required" placeholder="Product Name">
 				            </div>
