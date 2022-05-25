@@ -31,10 +31,10 @@
 <!--        <servlet-name>RegisterServlet</servlet-name>-->
 <!--        <servlet-class>com.LiaoChengxin.week3.homework.RegisterServlet</servlet-class>-->
 <!--    </servlet>-->
-    <servlet>
-        <servlet-name>LifeCycleServlet</servlet-name>
-        <servlet-class>com.LiaoChengxin.week3.homework.LifeCycleServlet</servlet-class>
-    </servlet>
+<!--    <servlet>-->
+<!--        <servlet-name>LifeCycleServlet</servlet-name>-->
+<!--        <servlet-class>com.LiaoChengxin.week3.homework.LifeCycleServlet</servlet-class>-->
+<!--    </servlet>-->
 
 <!--    <servlet>-->
 <!--        <servlet-name>ConfigDemoServlet</servlet-name>-->
@@ -87,7 +87,7 @@
 
     <servlet>
         <servlet-name>LifeCycleServletforLab1</servlet-name>
-        <servlet-class>com.LiaoChengxin.Lab1.LifeCycleServletforLab1</servlet-class>
+        <servlet-class>com.Lab1.LifeCycleServletforLab1</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -111,7 +111,7 @@
 <!--chain of filters-->
 <!--1st-->
     <filter>
-        <filter-name>HelloServlet</filter-name>
+        <filter-name>HelloFilter</filter-name>
         <filter-class>com.LiaoChengxin.filter.HelloFilter</filter-class>
     </filter>
     <filter-mapping>
@@ -128,13 +128,24 @@
         <url-pattern>/hello</url-pattern>
     </filter-mapping>
 <!--3nd-->
+<!--    <filter>-->
+<!--        <filter-name>AuthFilter</filter-name>-->
+<!--        <filter-class>com.LiaoChengxin.filter.AuthFilter</filter-class>-->
+<!--    </filter>-->
+<!--    <filter-mapping>-->
+<!--        <filter-name>AuthFilter</filter-name>-->
+<!--        <url-pattern>/hello</url-pattern>-->
+<!--    </filter-mapping>-->
+
     <filter>
-        <filter-name>AuthFilter</filter-name>
-        <filter-class>com.LiaoChengxin.filter.AuthFilter</filter-class>
+        <filter-name>LCXFilter</filter-name>
+        <filter-class>com.Lab2.LiaoChengxinFilter</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>AuthFilter</filter-name>
-        <url-pattern>/hello</url-pattern>
+        <filter-name>LCXFilter</filter-name>
+        <url-pattern>/Lab2/welcome.jsp</url-pattern>
     </filter-mapping>
+
+
 
 </web-app>
