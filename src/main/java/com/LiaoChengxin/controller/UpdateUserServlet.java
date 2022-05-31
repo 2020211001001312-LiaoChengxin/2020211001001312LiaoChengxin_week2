@@ -48,12 +48,13 @@ public class UpdateUserServlet extends HttpServlet {
             UserDao userDao = new UserDao();
             try {
                 userDao.updateUser(con3,user);
+                request.getRequestDispatcher("accountDetails").forward(request,response);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
 
-        request.getRequestDispatcher("WEB-INF/views/userInfo.jsp").forward(request,response);
+
 
     }
 
